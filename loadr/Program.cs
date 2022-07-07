@@ -1,18 +1,18 @@
 ﻿var httpClient = new HttpClient();
 httpClient.BaseAddress = new Uri("http://20.101.201.152");
 
-const int NUM_TASKS = 10000;
+const int NUM_TASKS = 100;
+int processed = 0;
 
 var tasks = new Task[NUM_TASKS];
 for (int i = 0; i < NUM_TASKS; i++)
 {
-    
-
-    var locali = i;
     Task t = Task.Run(async () => {        
         await httpClient.GetAsync("/");
-        if (locali % 100 == 0) 
-            Console.WriteLine(locali);
+        
+        Interlocked.Increment(ref processed);
+        if (processed % 10 == 0) 
+            Console.Write("{0,3}\b\b\b", processed);
     });
 
     tasks[i] = t;
