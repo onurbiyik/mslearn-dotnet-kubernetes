@@ -13,3 +13,11 @@ kubectl apply -f .\backend-deploy.yml -n pizza
 ```
 kubectl apply -f .\frontend-deploy.yml -n pizza    
 ```
+
+
+
+
+## Add Pod Disruption Budgets 
+https://docs.microsoft.com/en-us/azure/aks/operator-best-practices-scheduler#plan-for-availability-using-pod-disruption-budgets
+```
+kubectl apply -f .\pdb.yml -n pizza    

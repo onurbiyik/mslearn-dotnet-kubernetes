@@ -1,0 +1,19 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pizza-frontend-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: pizzafrontend
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pizza-backend-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: pizzabackend
