@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: pizzafrontend
 spec:
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
@@ -26,6 +26,17 @@ spec:
                 operator: In
                 values:
                 - "spot"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector: 
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - store
+              topologyKey: kubernetes.io/farketmez
       containers:
       - name: pizzafrontend
         image: AGKESECR.azurecr.io/onur/frontend
@@ -53,6 +64,8 @@ kind: Service
 metadata:
   name: pizzafrontend
 spec:
+  # Azure will automatically create a new public IP. 
+  # Each new service deployed will get a new dedicated frontend IP to be uniquely accessed.
   type: LoadBalancer
   ports:
   - port: 80
